@@ -21,7 +21,7 @@ Closes the Cassandra session after data insertion.
 2. DataStax Java Driver: Facilitates interaction with the Cassandra database.
 
 
-## SparkManipulations:
+## SparkManipulations
 ### Overview:
 The "SparkManipulations" Scala script demonstrates the integration of Apache Spark with Cassandra for comprehensive data manipulations, analysis, and storage.
 
