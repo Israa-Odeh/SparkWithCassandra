@@ -34,7 +34,7 @@ Executes a SELECT query to retrieve all fields from the "ce_students" table.
 Processes and prints the retrieved data using the DataStax Java Driver.
 #### 3.Spark DataFrames
 Creates a Spark session for data processing.
-Loads data from the Cassandra table ("ce_students") into a Spark DataFrame ("cassandraDF").
+Loads data from the Cassandra table ("ce_students") into a Spark DataFrame ("CEStudentsDF").
 Displays the schema and content of the DataFrame.
 #### 4. Data Manipulations
 - Identifies honor list students (GPA > 3.5) and saves them to the "honor_list" Cassandra table.
