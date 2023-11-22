@@ -11,16 +11,11 @@ The "JsonReader" Scala script is designed to read student data from a JSON file,
 Reads a JSON file ("StudentsRecords.json") into a string using the Play JSON library.
 Parses the JSON string into a Play JSON object, determining the number of students in the dataset.
 Initializes arrays to store student attributes and extracts relevant information using Play JSON's JsPath.
-
-#### 3. Cassandra Database Interaction:
+#### 2. Cassandra Database Interaction:
 Establishes a connection to a local Cassandra instance using the DataStax Java Driver.
 Selects the keyspace "studentsLog" for Cassandra operations.
 Defines and executes a prepared INSERT statement for the "ce_students" table, inserting student data into the Cassandra database.
 Closes the Cassandra session after data insertion.
-
-#### 4. Printing Results:
-Prints the retrieved student data to the console for illustrative purposes.
-
 ### Dependencies:
 1. Play JSON: Used for parsing JSON data.
 2. DataStax Java Driver: Facilitates interaction with the Cassandra database.
@@ -34,22 +29,18 @@ The "SparkManipulations" Scala script demonstrates the integration of Apache Spa
 #### 1. Cassandra Connection
 Establishes a connection to a Cassandra database running on localhost:9042.
 Utilizes the "studentsLog" keyspace for data operations.
-
 #### 2. Cassandra Data Retrieval
 Executes a SELECT query to retrieve all fields from the "ce_students" table.
 Processes and prints the retrieved data using the DataStax Java Driver.
-
 #### 3.Spark DataFrames
 Creates a Spark session for data processing.
 Loads data from the Cassandra table ("ce_students") into a Spark DataFrame ("cassandraDF").
 Displays the schema and content of the DataFrame.
-
 #### 4. Data Manipulations
 - Identifies honor list students (GPA > 3.5) and saves them to the "honor_list" Cassandra table.
 - Selects and saves passed students (GPA >= 1.5) to the "passed_students" Cassandra table.
 - Identifies and saves failed students (GPA < 1.5) to the "failed_students" Cassandra table.
 - Segregates students into scholarship categories and saves to respective Cassandra tables.
 - Computes the number of students per academic year using Spark's DataFrame API. Saves the result to the "students_per_academic_year" Cassandra table.
-
 #### 5. Resources Cleanup
 Closes the Spark session and Cassandra session after completing data operations.
