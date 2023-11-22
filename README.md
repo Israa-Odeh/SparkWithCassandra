@@ -16,7 +16,7 @@ Establishes a connection to a local Cassandra instance using the DataStax Java D
 Selects the keyspace "studentsLog" for Cassandra operations.
 Defines and executes a prepared INSERT statement for the "ce_students" table, inserting student data into the Cassandra database.
 Closes the Cassandra session after data insertion.
-### Dependencies:
+### Dependencies
 1. Play JSON: Used for parsing JSON data.
 2. DataStax Java Driver: Facilitates interaction with the Cassandra database.
 
@@ -25,7 +25,7 @@ Closes the Cassandra session after data insertion.
 ### Overview:
 The "SparkManipulations" Scala script demonstrates the integration of Apache Spark with Cassandra for comprehensive data manipulations, analysis, and storage.
 
-### Key Features:
+### Key Features
 #### 1. Cassandra Connection
 Establishes a connection to a Cassandra database running on localhost:9042.
 Utilizes the "studentsLog" keyspace for data operations.
