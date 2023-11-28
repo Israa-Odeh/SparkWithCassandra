@@ -21,7 +21,7 @@ object SparkManipulations extends App {
       |""".stripMargin
 
   // Execute the select query and process the result.
-  private val resultSet = session.execute(selectStatement);
+  private val resultSet = session.execute(selectStatement)
   resultSet.forEach { row =>
     // Retrieve and process each field.
     val id = row.getInt("id")
