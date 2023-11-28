@@ -25,21 +25,21 @@ object SparkManipulations extends App {
   resultSet.forEach { row =>
     // Retrieve and process each field.
     val id = row.getInt("id")
-    val yearOfStudy = row.getInt("Year of Study")
+    val yearOfStudy = row.getInt("year_of_study")
     val age = row.getInt("age")
     val attendance = row.getInt("attendance")
     val children = row.getInt("children")
     val city = row.getString("city")
-    val finishedCredits = row.getInt("finished credits")
+    val finishedCredits = row.getInt("finished_credits")
     val gpa = row.getFloat("gpa")
     val grades = row.getMap[String, String]("grades", classOf[String], classOf[String]).asScala.toMap
-    val healthConditions = row.getSet[String]("health conditions", classOf[String]).asScala.toList
+    val healthConditions = row.getSet[String]("health_conditions", classOf[String]).asScala.toList
     val income = row.getInt("income")
     val languages = row.getSet[String]("languages", classOf[String]).asScala.toSet
     val name = row.getString("name")
     val scores = row.getMap[String, Integer]("scores", classOf[String], classOf[Integer]).asScala.toSeq
     val siblings = row.getInt("siblings")
-    val studentExpenses = row.getMap[String, Integer]("student expenses", classOf[String], classOf[Integer]).asScala.toMap
+    val studentExpenses = row.getMap[String, Integer]("student_expenses", classOf[String], classOf[Integer]).asScala.toMap
 
     // Print the results to confirm the proper functioning of data retrieval from Cassandra.
     println(s"ID: $id")
@@ -81,7 +81,7 @@ object SparkManipulations extends App {
   CEStudentsDF.printSchema()
 
   // Choose the students to be included in the honor list.
-  private val honorListDF = CEStudentsDF.select("id", "name", "Year of Study", "gpa").filter("gpa > 3.5").orderBy(desc("gpa"))
+  private val honorListDF = CEStudentsDF.select("id", "name", "year_of_study", "gpa").filter("gpa > 3.5").orderBy(desc("gpa"))
   honorListDF.show()
 
   // Define honor list table.
@@ -90,7 +90,7 @@ object SparkManipulations extends App {
       | CREATE TABLE IF NOT EXISTS honor_list (
       |  id INT PRIMARY KEY,
       |  name TEXT,
-      |  "Year of Study" INT,
+      |  year_of_study INT,
       |  gpa FLOAT
       |)
     """.stripMargin
@@ -107,7 +107,7 @@ object SparkManipulations extends App {
     .save()
 
   // List of students who have successfully passed.
-  private val passedStudents = CEStudentsDF.select("id", "name", "Year of Study", "gpa").filter("gpa >= 1.5").orderBy(asc("gpa"))
+  private val passedStudents = CEStudentsDF.select("id", "name", "year_of_study", "gpa").filter("gpa >= 1.5").orderBy(asc("gpa"))
   passedStudents.show()
 
   createTable =
@@ -115,7 +115,7 @@ object SparkManipulations extends App {
       | CREATE TABLE IF NOT EXISTS passed_students (
       | id INT PRIMARY KEY,
       | name TEXT,
-      | "Year of Study" TEXT,
+      | year_of_study TEXT,
       | gpa INT
       | )
       |""".stripMargin
@@ -130,7 +130,7 @@ object SparkManipulations extends App {
     .save()
 
   // List of students who have Failed.
-  private val failedStudents = CEStudentsDF.select("id", "name", "Year of Study", "gpa").filter("gpa < 1.5")
+  private val failedStudents = CEStudentsDF.select("id", "name", "year_of_study", "gpa").filter("gpa < 1.5")
   failedStudents.show()
 
   createTable =
@@ -138,7 +138,7 @@ object SparkManipulations extends App {
       | CREATE TABLE IF NOT EXISTS failed_students (
       | id INT PRIMARY KEY,
       | name TEXT,
-      | "Year of Study" INT,
+      | year_of_study INT,
       | gpa INT
       | )
       |""".stripMargin
@@ -153,7 +153,7 @@ object SparkManipulations extends App {
     .save()
 
   // List of students who have been awarded a 33% scholarship.
-  private val scholarship1Recipients = CEStudentsDF.select("id", "name", "Year of Study", "gpa").filter("gpa >= 3.5 AND gpa <= 3.64").orderBy(desc("gpa"))
+  private val scholarship1Recipients = CEStudentsDF.select("id", "name", "year_of_study", "gpa").filter("gpa >= 3.5 AND gpa <= 3.64").orderBy(desc("gpa"))
   scholarship1Recipients.show()
 
   createTable =
@@ -161,7 +161,7 @@ object SparkManipulations extends App {
       | CREATE TABLE IF NOT EXISTS scholarship1_recipients (
       | id INT PRIMARY KEY,
       | name TEXT,
-      | "Year of Study" INT,
+      | year_of_study INT,
       | gpa INT
       | )
       |""".stripMargin
@@ -175,7 +175,7 @@ object SparkManipulations extends App {
     .save()
 
   // List of students who have been awarded a 50% scholarship
-  private val scholarship2Recipients = CEStudentsDF.select("id", "name", "Year of Study", "gpa").filter("gpa > 3.64").orderBy(desc("gpa"))
+  private val scholarship2Recipients = CEStudentsDF.select("id", "name", "year_of_study", "gpa").filter("gpa > 3.64").orderBy(desc("gpa"))
   scholarship2Recipients.show()
 
   createTable =
@@ -183,7 +183,7 @@ object SparkManipulations extends App {
       | CREATE TABLE IF NOT EXISTS scholarship2_recipients (
       | id INT PRIMARY KEY,
       | name TEXT,
-      | "Year of Study" INT,
+      | year_of_study INT,
       | gpa INT
       | )
       |""".stripMargin
@@ -197,15 +197,15 @@ object SparkManipulations extends App {
     .option("confirm.truncate", value = true)
     .save()
 
-  private val studentsPerYearDF = CEStudentsDF.groupBy("Year of Study")
+  private val studentsPerYearDF = CEStudentsDF.groupBy("year_of_study")
     .agg(count("*") as "students_count")
-    .orderBy(col("Year of Study"))
+    .orderBy(col("year_of_study"))
   studentsPerYearDF.show()
 
   createTable =
     """
       | CREATE TABLE IF NOT EXISTS students_per_academic_year (
-      | "Year of Study" INT PRIMARY KEY,
+      | year_of_study INT PRIMARY KEY,
       | students_count INT
       | )
       |""".stripMargin

@@ -123,21 +123,21 @@ object JsonReader {
       """
         |INSERT INTO ce_students (
         |  id,
-        |  "Year of Study",
+        |  year_of_study,
         |  age,
         |  attendance,
         |  children,
         |  city,
-        |  "finished credits",
+        |  finished_credits,
         |  gpa,
         |  grades,
-        |  "health conditions",
+        |  health_conditions,
         |  income,
         |  languages,
         |  name,
         |  scores,
         |  siblings,
-        |  "student expenses"
+        |  student_expenses
         |) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       """.stripMargin
 
